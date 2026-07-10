@@ -61,9 +61,9 @@ The server generates the blob key and never uses the original filename as a path
 
 ### Deletion lifecycle
 
-Deleting a photo or collection in the editor changes only the local draft. On a successful configuration save, the server compares old and new image references. It saves the new configuration first, then deletes uploaded blobs no longer referenced by any collection. Shared references are retained.
+Deleting a photo or collection in the editor changes only the local draft. On a successful configuration save, the server compares old and new image references. It saves the new configuration first, then deletes uploaded blobs no longer referenced by the current configuration or any of the ten retained history snapshots. Shared and restorable references are retained.
 
-A daily scheduled cleanup lists uploaded blobs and removes files older than twenty-four hours that are absent from the current configuration. This covers uploads abandoned before the editor is saved. Cleanup never removes external image URLs or recently uploaded files.
+A daily scheduled cleanup lists uploaded blobs and removes files older than twenty-four hours that are absent from the current configuration and all retained history snapshots. This covers uploads abandoned before the editor is saved and files whose final history reference has rotated out. Cleanup never removes external image URLs or recently uploaded files.
 
 ## Stage 3: First-Screen Cache and Responsive Images
 
