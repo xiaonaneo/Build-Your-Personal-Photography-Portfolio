@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="个人摄影作品集" />
+    <title data-site-title>Portfolio</title>
+    <style>
+      .is-loading .sidebar,
+      .is-loading .portfolio {
+        opacity: 0;
+      }
+    </style>
+    <script>
+      try {
+        if (localStorage.getItem("echo37-theme") === "darkroom") {
+          document.documentElement.classList.add("is-darkroom");
+        }
+      } catch {}
+    </script>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="is-loading">
+    <header class="sidebar">
+      <a class="name" href="#portfolio" data-site-name></a>
+      <nav class="main-nav" aria-label="主导航">
+        <div class="collection-nav" data-collection-nav></div>
+        <button class="random-photo" type="button" data-random-photo>Random</button>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">Darkroom</button>
+      </nav>
+    </header>
+
+    <main id="portfolio" class="portfolio" aria-label="摄影作品集">
+      <section class="slideshow" aria-live="polite">
+        <figure class="photo-frame">
+          <img
+            id="activePhoto"
+            alt=""
+          />
+        </figure>
+
+        <div class="slide-controls" aria-label="作品切换">
+          <button type="button" data-prev>Previous</button>
+          <span>/</span>
+          <button type="button" data-next>Next</button>
+          <span>(<span id="current">0</span> of <span id="total">0</span>)</span>
+        </div>
+      </section>
+
+    </main>
+
+    <script src="site-config.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

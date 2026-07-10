@@ -1,0 +1,7 @@
+data/
+.git/
+preview-*.png
+reference-jmfranceschi.png
+app.py
+render.yaml
+__pycache__/

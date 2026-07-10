@@ -1,0 +1,6 @@
+data/
+uploads/
+node_modules/
+.netlify/
+*.sqlite3
+.DS_Store

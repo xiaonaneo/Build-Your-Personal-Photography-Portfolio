@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="摄影网站后台" />
+    <title>摄影网站后台</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <div>
+        <p>Admin</p>
+        <h1>摄影网站后台</h1>
+      </div>
+      <nav>
+        <a href="index.html" target="_blank" rel="noreferrer">打开网站</a>
+      </nav>
+    </header>
+
+    <main class="admin-shell">
+      <form class="editor" data-editor>
+        <section class="panel">
+          <div class="panel-title">
+            <span>01</span>
+            <h2>基本信息</h2>
+          </div>
+          <label>
+            <span>网站姓名</span>
+            <input name="name" type="text" autocomplete="name" />
+          </label>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>02</span>
+            <h2>作品集</h2>
+          </div>
+          <div class="collection-list" data-collection-list></div>
+          <button class="secondary-action" type="button" data-add-collection>创建新的作品集</button>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>03</span>
+            <h2>作品图片</h2>
+          </div>
+          <p class="panel-note">当前作品集：<strong data-current-collection>Portfolio</strong></p>
+          <p class="panel-note">仅支持 JPG、PNG、WebP，单张不超过 5MB。</p>
+          <div class="photo-list" data-photo-list></div>
+          <div class="inline-actions">
+            <button class="secondary-action" type="button" data-add-photo>添加作品</button>
+          </div>
+          <div class="upload-progress" data-upload-progress hidden>
+            <div class="upload-progress-label">
+              <span data-upload-progress-text>正在上传 0%</span>
+              <span data-upload-progress-count></span>
+            </div>
+            <progress value="0" max="100" data-upload-progress-bar></progress>
+          </div>
+          <input class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" multiple data-photo-upload />
+        </section>
+
+        <div class="save-bar">
+          <p data-status>修改会先保存在后台页面，点击保存后前台生效。</p>
+          <button type="submit" data-save-button disabled>保存修改</button>
+        </div>
+      </form>
+
+      <aside class="preview" aria-label="当前预览">
+        <div class="preview-sidebar">
+          <strong data-preview-name></strong>
+          <div class="preview-collections" data-preview-collections></div>
+        </div>
+        <figure>
+          <img data-preview-image alt="后台预览图" />
+        </figure>
+      </aside>
+    </main>
+
+    <script src="site-config.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
