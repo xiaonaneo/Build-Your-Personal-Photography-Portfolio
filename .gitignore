@@ -2,6 +2,7 @@ data/
 uploads/
 node_modules/
 .netlify/
+public/
 .worktrees/
 *.sqlite3
 .DS_Store

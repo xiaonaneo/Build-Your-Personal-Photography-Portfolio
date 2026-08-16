@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "echo 'Static site: no build step'",
+    "build": "node build.mjs",
     "dev": "netlify dev",
     "deploy:preview": "netlify deploy",
     "deploy:prod": "netlify deploy --prod"
