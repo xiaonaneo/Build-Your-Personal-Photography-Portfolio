@@ -45,6 +45,11 @@ body.is-darkroom {
   color-scheme: dark;
 }
 
+.is-loading .sidebar,
+.is-loading .portfolio {
+  opacity: 0;
+}
+
 button,
 a {
   color: inherit;

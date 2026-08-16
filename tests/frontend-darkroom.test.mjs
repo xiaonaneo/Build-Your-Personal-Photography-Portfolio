@@ -3,10 +3,12 @@ import { readFileSync } from "node:fs";
 
 const html = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const script = readFileSync(new URL("../script.js", import.meta.url), "utf8");
+const themeInit = readFileSync(new URL("../theme-init.js", import.meta.url), "utf8");
 const styles = readFileSync(new URL("../styles.css", import.meta.url), "utf8");
 
 assert.match(html, /data-theme-toggle/, "前台需要 Darkroom 模式按钮入口");
-assert.match(html, /localStorage\.getItem\("echo37-theme"\)/, "首屏需要提前读取主题避免闪白");
+assert.match(html, /theme-init\.js/, "首屏需要加载主题初始化脚本避免闪白");
+assert.match(themeInit, /localStorage\.getItem\("echo37-theme"\)/, "首屏需要提前读取主题避免闪白");
 assert.match(script, /const THEME_STORAGE_KEY = "echo37-theme"/, "主题选择需要使用稳定的本地存储 key");
 assert.match(script, /function applyTheme/, "需要统一应用主题状态");
 assert.match(script, /function toggleTheme/, "需要独立切换主题逻辑");

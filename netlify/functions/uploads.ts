@@ -1,5 +1,6 @@
 import type { Config, Context } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
+import { securityHeaders } from "./_shared/http.js";
 
 export default async (_request: Request, context: Context) => {
   const key = context.params.key;
@@ -15,6 +16,7 @@ export default async (_request: Request, context: Context) => {
     headers: {
       "Content-Type": metadata?.contentType || "application/octet-stream",
       "Cache-Control": "public, max-age=31536000, immutable",
+      ...securityHeaders,
     },
   });
 };

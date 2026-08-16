@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: photography-portfolio
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 30 app:application"
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: COOKIE_SECURE
+        value: "true"
+    disk:
+      name: portfolio-data
+      mountPath: /var/data
+      sizeGB: 1

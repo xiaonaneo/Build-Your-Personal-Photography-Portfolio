@@ -84,6 +84,43 @@ button {
   color: var(--active);
 }
 
+.login-panel {
+  width: min(420px, calc(100% - 68px));
+  margin: 72px auto;
+  padding: 28px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.login-panel > p {
+  margin: 0 0 8px;
+  color: var(--active);
+  text-transform: uppercase;
+}
+
+.login-panel h2 {
+  margin: 0 0 24px;
+  font-size: 22px;
+}
+
+.login-panel form {
+  display: grid;
+  gap: 16px;
+}
+
+.login-panel button {
+  justify-self: start;
+  padding: 11px 14px;
+  background: var(--text);
+  color: #fff;
+}
+
+.login-panel [data-login-status] {
+  min-height: 1.4em;
+  margin: 0;
+  color: var(--muted);
+}
+
 .admin-shell {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 42vw);

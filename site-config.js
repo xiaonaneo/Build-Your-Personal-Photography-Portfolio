@@ -61,6 +61,7 @@ async function readSiteConfig() {
 async function writeSiteConfig(config) {
   const response = await fetch("/api/config", {
     method: "POST",
+    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
     },
@@ -83,6 +84,7 @@ async function uploadPhotos(files, onProgress) {
   return new Promise((resolve, reject) => {
     const request = new XMLHttpRequest();
     request.open("POST", "/api/upload");
+    request.withCredentials = true;
 
     request.upload.addEventListener("progress", (event) => {
       if (!event.lengthComputable || typeof onProgress !== "function") return;

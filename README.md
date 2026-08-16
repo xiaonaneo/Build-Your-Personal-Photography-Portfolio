@@ -20,6 +20,14 @@ http://127.0.0.1:4173
 http://127.0.0.1:4173/admin.html
 ```
 
+本地后台登录也需要先设置环境变量；可用随机值作为本地密钥：
+
+```bash
+export ADMIN_PASSWORD='local-only-password'
+export SESSION_SECRET="$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')"
+python3 app.py
+```
+
 ## 后端和数据库
 
 - 后端入口：`app.py`
@@ -27,6 +35,8 @@ http://127.0.0.1:4173/admin.html
 - 上传目录：`data/uploads/`
 - 配置接口：`GET /api/config`、`POST /api/config`
 - 图片上传接口：`POST /api/upload`
+
+生产环境必须设置两个环境变量：`ADMIN_PASSWORD`（后台密码）和至少 32 字符的 `SESSION_SECRET`（会话签名密钥）。不要把它们写入仓库。后台和所有写接口都要求登录。
 
 后台保存后会写入 SQLite；上传图片会保存成文件并返回 `/uploads/...` 路径。
 

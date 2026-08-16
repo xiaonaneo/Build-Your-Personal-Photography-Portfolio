@@ -455,4 +455,4 @@ async function initAdmin() {
   markSaved("已加载线上配置。");
 }
 
-initAdmin();
+window.initAdmin = initAdmin;

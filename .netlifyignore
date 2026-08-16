@@ -5,3 +5,14 @@ reference-jmfranceschi.png
 app.py
 render.yaml
 __pycache__/
+tests/
+docs/
+echo37-sites/
+output/
+.playwright-cli/
+AGENTS.md
+README.md
+package.json
+package-lock.json
+requirements.txt
+security_best_practices_report.md
