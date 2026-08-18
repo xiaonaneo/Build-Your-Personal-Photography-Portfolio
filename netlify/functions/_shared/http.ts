@@ -1,5 +1,7 @@
 export const MAX_CONFIG_BODY_BYTES = 1 * 1024 * 1024;
-export const MAX_UPLOAD_BODY_BYTES = 25 * 1024 * 1024;
+// Netlify's buffered function payload is 6 MB, with binary uploads having a
+// lower effective limit after encoding and multipart overhead.
+export const MAX_UPLOAD_BODY_BYTES = 4.5 * 1024 * 1024;
 
 export const securityHeaders = {
   "Content-Security-Policy": "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data: blob:; connect-src 'self'",

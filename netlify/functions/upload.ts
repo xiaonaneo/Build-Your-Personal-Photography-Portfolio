@@ -4,7 +4,7 @@ import { requireAdmin } from "./_shared/auth.js";
 import { requestExceedsLimit, securityHeaders, MAX_UPLOAD_BODY_BYTES } from "./_shared/http.js";
 
 const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
-const maxUploadSize = 5 * 1024 * 1024;
+const maxUploadSize = 4 * 1024 * 1024;
 const maxFilesPerRequest = 20;
 
 function detectImageType(bytes: Uint8Array) {
@@ -58,7 +58,7 @@ export default async (request: Request) => {
     }
 
     if (file.size > maxUploadSize) {
-      return jsonResponse({ error: `${file.name} is larger than 5MB.` }, 400);
+      return jsonResponse({ code: "SINGLE_FILE_TOO_LARGE", message: `${file.name} 超过 4MB。` }, 400);
     }
 
     const buffer = await file.arrayBuffer();

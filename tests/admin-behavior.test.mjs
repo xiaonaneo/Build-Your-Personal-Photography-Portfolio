@@ -17,3 +17,7 @@ assert.match(script, /saveButton\.disabled = !isDirty \|\| isSaving/, "无新改
 assert.match(script, /已保存到线上网站/, "保存成功反馈需要明确说明已保存到线上网站");
 assert.match(allScripts, /XMLHttpRequest/, "上传进度需要使用支持 upload progress 的请求方式");
 assert.match(allScripts, /upload\.addEventListener\("progress"/, "上传时需要监听进度事件");
+assert.match(configScript, /MAX_UPLOAD_BATCH_BYTES\s*=\s*4\s*\*\s*1024\s*\*\s*1024/, "上传批次需要控制在 Netlify 安全请求大小内");
+assert.match(configScript, /createUploadBatches/, "多张图片需要先按总大小拆分批次");
+assert.match(configScript, /for \(const batch of batches\)/, "上传批次需要串行发送，避免重新合并成一个大请求");
+assert.match(script, /SINGLE_FILE_TOO_LARGE/, "单张超过批次上限时需要给出明确提示");

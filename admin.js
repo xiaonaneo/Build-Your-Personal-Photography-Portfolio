@@ -1,6 +1,6 @@
 let draft;
 const ALLOWED_UPLOAD_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
-const MAX_UPLOAD_SIZE = 5 * 1024 * 1024;
+const MAX_UPLOAD_SIZE = MAX_UPLOAD_BATCH_BYTES;
 let draggedCollectionIndex = null;
 let draggedPhotoIndex = null;
 let isDirty = false;
@@ -402,7 +402,7 @@ photoUpload.addEventListener("change", async () => {
   }
 
   if (oversized) {
-    setStatus(`${oversized.name} 超过 5MB，请压缩后再上传。`);
+    setStatus(`${oversized.name} 超过 4MB，请压缩后再上传。`);
     photoUpload.value = "";
     return;
   }
@@ -419,8 +419,14 @@ photoUpload.addEventListener("change", async () => {
     photos.forEach(addPhoto);
     renderPhotos();
     markDirty(`已添加 ${photos.length} 张作品，记得保存。`);
-  } catch {
-    setStatus("读取图片失败，请换一张图片再试。");
+  } catch (error) {
+    if (error?.code === "SINGLE_FILE_TOO_LARGE") {
+      setStatus("单张图片超过 4MB，请压缩后再上传。");
+    } else if (error?.code === "REQUEST_TOO_LARGE") {
+      setStatus("本批图片总大小超过平台限制，请减少图片或压缩后再试。");
+    } else {
+      setStatus("上传失败，请检查图片大小或网络连接后再试。");
+    }
   } finally {
     photoUpload.value = "";
   }
