@@ -34,6 +34,28 @@ Netlify Functions 使用 Netlify Blobs 保存数据：
 
 这些 Blob store 绑定在各自的 Netlify 站点上。Fork 或一键部署后，其他人的后台、图片和配置不会与原站点共享。
 
+## 让已部署网站自动同步 GitHub 更新
+
+一键部署后，如果希望以后 GitHub 的最新代码自动同步到自己的 Netlify 网站，需要把 Netlify 项目连接到这个 GitHub 仓库：
+
+1. 打开自己的 Netlify 项目。
+2. 进入 `Project configuration → Build & deploy → Continuous deployment → Repository`。
+3. 点击 `Link repository` 或 `Connect to Git provider`，选择 GitHub。
+4. 选择仓库 `xiaonaneo/Personal-Photography-Site`，生产分支选择 `main`。
+5. 保存并完成一次部署。
+
+连接成功后，每次仓库 `main` 分支有新提交，Netlify 会自动执行 `npm run build`，发布 `public/` 并重新部署 Functions。之后只需要执行：
+
+```bash
+git pull origin main
+```
+
+或者在自己的 GitHub 仓库中同步上游更新即可。也可以在 Netlify 的 `Deploys` 页面查看每次自动部署的提交记录。
+
+自动同步的是代码、样式、前台功能和 Functions，不会覆盖自己后台已经保存的作品、简介、图片或管理员密码；这些数据保存在自己 Netlify 项目的 Blob store 中。
+
+如果项目没有连接 GitHub，手动执行 `netlify deploy --prod` 只能更新当次部署，之后不会自动跟随仓库更新。详见 [Netlify Continuous Deployment 文档](https://docs.netlify.com/deploy/create-deploys/)。
+
 ## 本地预览
 
 安装依赖并生成前台发布目录：
