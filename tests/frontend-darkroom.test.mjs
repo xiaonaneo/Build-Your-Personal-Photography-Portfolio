@@ -23,3 +23,4 @@ assert.doesNotMatch(html, /data-photo-nav-hint/, "正式站点不应显示图片
 assert.doesNotMatch(script, /photoNavHint|photoFrame\.dataset\.direction|w-resize|e-resize/, "正式站点不应显示方向提示或方向鼠标");
 assert.match(script, /contextmenu.*preventDefault/, "图片需要禁止右键复制菜单");
 assert.match(script, /dragstart.*preventDefault/, "图片需要禁止原生拖拽保存");
+assert.match(styles, /\.slide-controls\s*\{[^}]*opacity: 1/s, "移动端需要始终显示照片切换控件");

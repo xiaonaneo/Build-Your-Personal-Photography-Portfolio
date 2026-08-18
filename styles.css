@@ -249,6 +249,7 @@ img {
 
   .slide-controls {
     justify-content: flex-start;
+    opacity: 1;
   }
 
 }

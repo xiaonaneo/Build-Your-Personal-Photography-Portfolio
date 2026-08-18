@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 const html = readFileSync(new URL("../admin.html", import.meta.url), "utf8");
 const script = readFileSync(new URL("../admin.js", import.meta.url), "utf8");
 const configScript = readFileSync(new URL("../site-config.js", import.meta.url), "utf8");
+const adminStyles = readFileSync(new URL("../admin.css", import.meta.url), "utf8");
 const allScripts = `${script}\n${configScript}`;
 
 assert.match(html, /data-save-button/, "保存按钮需要可被脚本控制禁用状态");
@@ -30,3 +31,4 @@ assert.match(html, /class="preview-site"/, "后台预览需要使用正式站点
 assert.match(html, /class="preview-showcase"/, "后台预览需要显示图片与右侧简介布局");
 assert.match(html, /data-preview-prev|data-preview-next/, "后台预览需要显示正式站点的切换控制");
 assert.match(script, /movePreviewPhoto/, "后台预览需要支持切换当前预览照片");
+assert.match(adminStyles, /\[hidden\]\s*\{[^}]*display: none !important/s, "后台隐藏编辑器不能被布局 display 覆盖");
