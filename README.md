@@ -4,7 +4,7 @@
 
 ## 一键部署到 Netlify
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/xiaonaneo/Personal-Photography-Site)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/xiaonaneo/Build-Your-Personal-Photography-Portfolio)
 
 点击按钮后：
 
@@ -53,7 +53,7 @@ Netlify Functions 使用 Netlify Blobs 保存数据：
 1. 打开自己的 Netlify 项目。
 2. 进入 `Project configuration → Build & deploy → Continuous deployment → Repository`。
 3. 点击 `Link repository` 或 `Connect to Git provider`，选择 GitHub。
-4. 选择仓库 `xiaonaneo/Personal-Photography-Site`，生产分支选择 `main`。
+4. 选择仓库 `xiaonaneo/Build-Your-Personal-Photography-Portfolio`，生产分支选择 `main`。
 5. 保存并完成一次部署。
 
 连接成功后，每次仓库 `main` 分支有新提交，Netlify 会自动执行 `npm run build`，发布 `public/` 并重新部署 Functions。直接连接主仓库的项目不需要手动同步，主仓库更新后会自动更新。
@@ -61,7 +61,7 @@ Netlify Functions 使用 Netlify Blobs 保存数据：
 如果你使用的是自己的 Fork，需要先添加主仓库为 `upstream`，再同步更新：
 
 ```bash
-git remote add upstream https://github.com/xiaonaneo/Personal-Photography-Site.git
+git remote add upstream https://github.com/xiaonaneo/Build-Your-Personal-Photography-Portfolio.git
 git fetch upstream
 git switch main
 git merge upstream/main
