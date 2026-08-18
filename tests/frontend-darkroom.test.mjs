@@ -19,4 +19,9 @@ assert.match(styles, /--page: #[0-9a-fA-F]{6}/, "黑夜模式需要覆盖页面�
 assert.match(styles, /color-scheme: dark/, "黑夜模式需要声明 dark color-scheme");
 assert.doesNotMatch(script, /isSwitching|is-changing|is-photo-loading/, "照片切换不应再使用过渡动效状态");
 assert.match(script, /event\.clientX < bounds\.left \+ bounds\.width \/ 2/, "点击图片左右区域需要决定前进或后退");
-assert.match(styles, /cursor: ew-resize/, "图片需要提示左右点击切换方向");
+assert.match(html, /data-photo-nav-hint/, "图片需要左右切换提示元素");
+assert.match(script, /photoFrame\.dataset\.direction = direction/, "鼠标移动时需要更新当前左右方向");
+assert.match(script, /contextmenu.*preventDefault/, "图片需要禁止右键复制菜单");
+assert.match(script, /dragstart.*preventDefault/, "图片需要禁止原生拖拽保存");
+assert.match(styles, /cursor: w-resize/);
+assert.match(styles, /cursor: e-resize/);
