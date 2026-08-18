@@ -14,7 +14,6 @@
       <a class="name" href="#portfolio" data-site-name></a>
       <nav class="main-nav" aria-label="主导航">
         <div class="collection-nav" data-collection-nav></div>
-        <p class="collection-description" data-collection-description hidden></p>
         <button class="random-photo" type="button" data-random-photo>Random</button>
         <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">Darkroom</button>
       </nav>
@@ -22,12 +21,15 @@
 
     <main id="portfolio" class="portfolio" aria-label="摄影作品集">
       <section class="slideshow" aria-live="polite">
-        <figure class="photo-frame">
-          <img
-            id="activePhoto"
-            alt=""
-          />
-        </figure>
+        <div class="showcase">
+          <figure class="photo-frame">
+            <img
+              id="activePhoto"
+              alt=""
+            />
+          </figure>
+          <p class="collection-description" data-collection-description hidden></p>
+        </div>
 
         <div class="slide-controls" aria-label="作品切换">
           <button type="button" data-prev>Previous</button>

@@ -11,3 +11,4 @@ assert.match(script, /Math\.random/, "随机跳转应使用随机索引");
 assert.match(script, /data-random-photo/, "Random 按钮需要绑定点击事件");
 assert.match(script, /renderCollectionNav\(\);/, "随机跨作品集后需要刷新导航高亮");
 assert.match(script, /data-collection-description/, "前台需要展示当前作品集简介");
+assert.match(html, /class="showcase"/, "作品集简介需要位于主视觉区域而不是左侧导航");
