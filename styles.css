@@ -93,7 +93,7 @@ img {
 .name {
   display: inline-block;
   margin-bottom: 42px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 1;
 }
@@ -141,6 +141,10 @@ img {
 
 .mobile-nav-actions {
   display: none;
+}
+
+.mobile-bottom-row {
+  display: contents;
 }
 
 .showcase {
@@ -270,9 +274,9 @@ img {
   .mobile-nav-actions {
     display: flex;
     gap: 18px;
-    margin: 0 18px 56px;
-    padding-top: 14px;
-    border-top: 1px solid var(--placeholder);
+    margin: 0;
+    padding: 0;
+    border-top: 0;
   }
 
   .mobile-nav-actions .random-photo,
@@ -304,8 +308,18 @@ img {
   }
 
   .slide-controls {
-    justify-content: flex-start;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 0;
     opacity: 1;
+  }
+
+  .mobile-bottom-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin: 18px 0 38px;
   }
 
 }
