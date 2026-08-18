@@ -13,9 +13,13 @@
     <header class="sidebar">
       <a class="name" href="#portfolio" data-site-name></a>
       <nav class="main-nav" aria-label="主导航">
-        <div class="collection-nav" data-collection-nav></div>
-        <button class="random-photo" type="button" data-random-photo>Random</button>
-        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">Darkroom</button>
+        <div class="collection-nav-group">
+          <div class="collection-nav" data-collection-nav></div>
+        </div>
+        <div class="nav-actions">
+          <button class="random-photo" type="button" data-random-photo>Random</button>
+          <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">Darkroom</button>
+        </div>
       </nav>
     </header>
 
@@ -26,6 +30,9 @@
             <img
               id="activePhoto"
               draggable="false"
+              decoding="async"
+              fetchpriority="high"
+              loading="eager"
               alt=""
             />
           </figure>
@@ -39,6 +46,11 @@
           <span>(<span id="current">0</span> of <span id="total">0</span>)</span>
         </div>
       </section>
+
+      <div class="mobile-nav-actions">
+        <button class="random-photo" type="button" data-random-photo>Random</button>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">Darkroom</button>
+      </div>
 
     </main>
 

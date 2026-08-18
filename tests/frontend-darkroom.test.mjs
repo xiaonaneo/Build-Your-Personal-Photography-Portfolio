@@ -24,3 +24,12 @@ assert.doesNotMatch(script, /photoNavHint|photoFrame\.dataset\.direction|w-resiz
 assert.match(script, /contextmenu.*preventDefault/, "图片需要禁止右键复制菜单");
 assert.match(script, /dragstart.*preventDefault/, "图片需要禁止原生拖拽保存");
 assert.match(styles, /\.slide-controls\s*\{[^}]*opacity: 1/s, "移动端需要始终显示照片切换控件");
+assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.sidebar\s*\{[\s\S]*position: static/, "移动端导航不能继续固定在图片左侧");
+assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.photo-frame\s*\{[\s\S]*width: 100%/, "移动端图片需要使用完整可用宽度");
+assert.match(script, /responsiveImageSrcSet/, "照片需要使用响应式图片源");
+assert.match(script, /\.netlify\/images/, "上传图片需要经过 Netlify Image CDN 优化");
+assert.match(script, /activePhoto\.srcset/, "主图需要设置 srcset 让浏览器选择合适尺寸");
+assert.match(html, /class="collection-nav-group"/, "移动导航需要明确作品集分组");
+assert.match(html, /class="mobile-nav-actions"/, "移动端功能操作需要放在图片和切换控件之后");
+assert.doesNotMatch(html, /mobile-nav-label|>Collections</, "移动端不需要额外的 Collections 标签");
+assert.match(script, /querySelectorAll\("\[data-random-photo\]"\)/, "移动端功能按钮需要与桌面按钮共享行为");

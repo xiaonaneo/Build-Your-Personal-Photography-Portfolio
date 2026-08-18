@@ -9,18 +9,53 @@ const activePhoto = document.querySelector("#activePhoto");
 const current = document.querySelector("#current");
 const total = document.querySelector("#total");
 const collectionNav = document.querySelector("[data-collection-nav]");
-const randomPhotoButton = document.querySelector("[data-random-photo]");
-const themeToggleButton = document.querySelector("[data-theme-toggle]");
+const randomPhotoButtons = document.querySelectorAll("[data-random-photo]");
+const themeToggleButtons = document.querySelectorAll("[data-theme-toggle]");
 const siteName = document.querySelector("[data-site-name]");
 const siteTitle = document.querySelector("[data-site-title]");
 const collectionDescription = document.querySelector("[data-collection-description]");
+
+const RESPONSIVE_IMAGE_WIDTHS = [480, 768, 1200];
+const RESPONSIVE_IMAGE_SIZES = "(max-width: 760px) calc(100vw - 36px), 575px";
+
+function isImageCdnSource(source) {
+  return source.startsWith("/uploads/") || source.includes("images.unsplash.com/");
+}
+
+function optimizedImageSource(source, width) {
+  if (source.startsWith("/uploads/")) {
+    const params = new URLSearchParams({ url: source, w: String(width), q: "78" });
+    return `/.netlify/images?${params.toString()}`;
+  }
+
+  if (source.includes("images.unsplash.com/")) {
+    try {
+      const url = new URL(source);
+      url.searchParams.set("w", String(width));
+      url.searchParams.set("q", "78");
+      url.searchParams.set("auto", "format");
+      return url.toString();
+    } catch {}
+  }
+
+  return source;
+}
+
+function responsiveImageSrcSet(source) {
+  if (!isImageCdnSource(source)) return "";
+  return RESPONSIVE_IMAGE_WIDTHS
+    .map((width) => `${optimizedImageSource(source, width)} ${width}w`)
+    .join(", ");
+}
 
 function applyTheme(theme) {
   const isDarkroom = theme === "darkroom";
   document.documentElement.classList.toggle("is-darkroom", isDarkroom);
   document.body.classList.toggle("is-darkroom", isDarkroom);
-  themeToggleButton.setAttribute("aria-pressed", String(isDarkroom));
-  themeToggleButton.textContent = isDarkroom ? "Light" : "Darkroom";
+  themeToggleButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", String(isDarkroom));
+    button.textContent = isDarkroom ? "Light" : "Darkroom";
+  });
 }
 
 function readSavedTheme() {
@@ -43,7 +78,11 @@ function preloadPhoto(index) {
   if (photos.length === 0) return;
   const photo = photos[(index + photos.length) % photos.length];
   const image = new Image();
-  image.src = photo.src;
+  image.decoding = "async";
+  image.fetchPriority = "low";
+  image.sizes = RESPONSIVE_IMAGE_SIZES;
+  image.srcset = responsiveImageSrcSet(photo.src);
+  image.src = optimizedImageSource(photo.src, 768);
 }
 
 function loadActivePhoto() {
@@ -59,7 +98,9 @@ function loadActivePhoto() {
   current.textContent = activeIndex + 1;
   total.textContent = photos.length;
   activePhoto.alt = photo.alt;
-  activePhoto.src = photo.src;
+  activePhoto.sizes = RESPONSIVE_IMAGE_SIZES;
+  activePhoto.srcset = responsiveImageSrcSet(photo.src);
+  activePhoto.src = optimizedImageSource(photo.src, 1200);
 }
 
 function syncActivePhoto() {
@@ -147,8 +188,8 @@ async function initSite() {
 
 document.querySelector("[data-prev]").addEventListener("click", () => showPhoto(activeIndex - 1));
 document.querySelector("[data-next]").addEventListener("click", () => showPhoto(activeIndex + 1));
-randomPhotoButton.addEventListener("click", showRandomPhoto);
-themeToggleButton.addEventListener("click", toggleTheme);
+randomPhotoButtons.forEach((button) => button.addEventListener("click", showRandomPhoto));
+themeToggleButtons.forEach((button) => button.addEventListener("click", toggleTheme));
 activePhoto.addEventListener("click", (event) => {
   const bounds = activePhoto.getBoundingClientRect();
   const direction = event.clientX < bounds.left + bounds.width / 2 ? "left" : "right";
