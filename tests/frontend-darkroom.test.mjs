@@ -27,6 +27,11 @@ assert.match(styles, /\.slide-controls\s*\{[^}]*opacity: 1/s, "移动端需要�
 assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.sidebar\s*\{[\s\S]*position: static/, "移动端导航不能继续固定在图片左侧");
 assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.photo-frame\s*\{[\s\S]*width: 100%/, "移动端图片需要使用完整可用宽度");
 assert.match(styles, /\.name\s*\{[^}]*font-size: 14px/s, "网站标题字号需要放大一号");
+assert.match(styles, /\.collection-description\s*\{[\s\S]*position: absolute[\s\S]*top: 100%[\s\S]*right: 0/s, "PC 端作品集简介需要位于图片下方右侧");
+assert.match(styles, /\.slide-controls\s*\{[\s\S]*width: 100%[\s\S]*justify-content: flex-start/s, "PC 端切换控件需要与图片左边缘对齐");
+assert.match(styles, /\.mobile-bottom-row\s*\{[\s\S]*width: 100%/s, "PC 端底部行需要继承图片容器宽度");
+assert.match(html, /class="photo-stack"/, "图片和底部信息需要共享收缩宽度容器");
+assert.match(styles, /\.photo-stack\s*\{[\s\S]*display: inline-block/s, "PC 端图片容器需要按实际图片尺寸收缩");
 assert.match(script, /responsiveImageSrcSet/, "照片需要使用响应式图片源");
 assert.match(script, /\.netlify\/images/, "上传图片需要经过 Netlify Image CDN 优化");
 assert.match(script, /activePhoto\.srcset/, "主图需要设置 srcset 让浏览器选择合适尺寸");
