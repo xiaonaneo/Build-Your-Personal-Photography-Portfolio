@@ -21,3 +21,6 @@ assert.match(configScript, /MAX_UPLOAD_BATCH_BYTES\s*=\s*4\s*\*\s*1024\s*\*\s*10
 assert.match(configScript, /createUploadBatches/, "多张图片需要先按总大小拆分批次");
 assert.match(configScript, /for \(const batch of batches\)/, "上传批次需要串行发送，避免重新合并成一个大请求");
 assert.match(script, /SINGLE_FILE_TOO_LARGE/, "单张超过批次上限时需要给出明确提示");
+assert.match(script, /photo-drag-handle/, "照片列表需要显示拖拽把手");
+assert.match(script, /dataTransfer\.setData\("text\/plain"/, "原生拖拽需要写入拖拽数据以兼容浏览器");
+assert.match(script, /is-drop-before|is-drop-after/, "拖拽时需要显示上下插入位置");

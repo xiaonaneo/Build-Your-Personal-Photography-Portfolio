@@ -227,6 +227,14 @@ textarea:focus {
   background: #f3faf7;
 }
 
+.photo-item.is-drop-before {
+  border-top: 3px solid var(--active);
+}
+
+.photo-item.is-drop-after {
+  border-bottom: 3px solid var(--active);
+}
+
 .collection-actions {
   display: flex;
   gap: 12px;
@@ -257,6 +265,23 @@ textarea:focus {
 .photo-fields {
   display: flex;
   align-items: center;
+  gap: 16px;
+}
+
+.photo-drag-handle {
+  display: inline-grid;
+  width: 24px;
+  height: 32px;
+  place-items: center;
+  color: var(--muted);
+  cursor: grab;
+  user-select: none;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.photo-drag-handle:active {
+  cursor: grabbing;
 }
 
 .photo-actions {

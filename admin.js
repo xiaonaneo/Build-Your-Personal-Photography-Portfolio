@@ -143,6 +143,7 @@ function renderPhotos() {
     const image = document.createElement("img");
     const fields = document.createElement("div");
     const actions = document.createElement("div");
+    const dragHandle = document.createElement("span");
 
     item.className = "photo-item";
     item.draggable = true;
@@ -150,6 +151,10 @@ function renderPhotos() {
     image.src = photo.src;
     image.alt = "";
     fields.className = "photo-fields";
+    dragHandle.className = "photo-drag-handle";
+    dragHandle.textContent = "↕";
+    dragHandle.title = "拖拽调整照片顺序";
+    dragHandle.setAttribute("aria-label", "拖拽调整照片顺序");
 
     actions.className = "photo-actions";
     actions.innerHTML = `
@@ -158,7 +163,7 @@ function renderPhotos() {
       <button type="button" data-remove="${index}">删除</button>
     `;
 
-    fields.append(actions);
+    fields.append(dragHandle, actions);
     item.append(image, fields);
     photoList.append(item);
   });
@@ -339,6 +344,7 @@ photoList.addEventListener("dragstart", (event) => {
   draggedPhotoIndex = Number(item.dataset.photoIndex);
   item.classList.add("is-dragging");
   event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData("text/plain", String(draggedPhotoIndex));
 });
 
 photoList.addEventListener("dragover", (event) => {
@@ -346,28 +352,42 @@ photoList.addEventListener("dragover", (event) => {
   const item = event.target.closest("[data-photo-index]");
   if (!item) return;
   event.preventDefault();
+  event.dataTransfer.dropEffect = "move";
+  const before = event.clientY < item.getBoundingClientRect().top + item.getBoundingClientRect().height / 2;
+  item.classList.toggle("is-drop-before", before);
+  item.classList.toggle("is-drop-after", !before);
   item.classList.add("is-drop-target");
 });
 
 photoList.addEventListener("dragleave", (event) => {
-  event.target.closest("[data-photo-index]")?.classList.remove("is-drop-target");
+  event.target.closest("[data-photo-index]")?.classList.remove("is-drop-target", "is-drop-before", "is-drop-after");
 });
 
 photoList.addEventListener("drop", (event) => {
   const item = event.target.closest("[data-photo-index]");
   if (!item || draggedPhotoIndex === null) return;
   event.preventDefault();
+  const itemRect = item.getBoundingClientRect();
   const targetIndex = Number(item.dataset.photoIndex);
-  activeCollection().photos = reorderItems(activeCollection().photos, draggedPhotoIndex, targetIndex);
+  const targetPosition = event.clientY < itemRect.top + itemRect.height / 2
+    ? targetIndex
+    : targetIndex + 1;
+  const insertIndex = targetPosition > draggedPhotoIndex ? targetPosition - 1 : targetPosition;
+  if (insertIndex === draggedPhotoIndex) {
+    draggedPhotoIndex = null;
+    item.classList.remove("is-drop-target", "is-drop-before", "is-drop-after");
+    return;
+  }
+  activeCollection().photos = reorderItems(activeCollection().photos, draggedPhotoIndex, insertIndex);
   draggedPhotoIndex = null;
   renderPhotos();
-  markDirty("已拖拽调整图片顺序，记得保存。");
+  markDirty("已拖拽调整照片顺序，记得保存。");
 });
 
 photoList.addEventListener("dragend", () => {
   draggedPhotoIndex = null;
   document.querySelectorAll(".photo-item").forEach((item) => {
-    item.classList.remove("is-dragging", "is-drop-target");
+    item.classList.remove("is-dragging", "is-drop-target", "is-drop-before", "is-drop-after");
   });
 });
 
