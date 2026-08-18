@@ -17,3 +17,6 @@ assert.match(script, /data-theme-toggle/, "Darkroom 按钮需要绑定点击事�
 assert.match(styles, /body\.is-darkroom/, "样式需要包含黑夜模式状态类");
 assert.match(styles, /--page: #[0-9a-fA-F]{6}/, "黑夜模式需要覆盖页面背景变量");
 assert.match(styles, /color-scheme: dark/, "黑夜模式需要声明 dark color-scheme");
+assert.doesNotMatch(script, /isSwitching|is-changing|is-photo-loading/, "照片切换不应再使用过渡动效状态");
+assert.match(script, /event\.clientX < bounds\.left \+ bounds\.width \/ 2/, "点击图片左右区域需要决定前进或后退");
+assert.match(styles, /cursor: ew-resize/, "图片需要提示左右点击切换方向");

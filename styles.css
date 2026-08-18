@@ -171,24 +171,6 @@ img {
   min-height: 120px;
 }
 
-.photo-frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0;
-  background:
-    linear-gradient(90deg, transparent, var(--placeholder-glint), transparent),
-    var(--placeholder);
-  background-size: 220% 100%, auto;
-  transition: opacity 180ms ease;
-}
-
-.photo-frame.is-photo-loading::before {
-  opacity: 1;
-  animation: photo-placeholder 1100ms ease-in-out infinite;
-}
-
 .photo-frame img {
   position: relative;
   z-index: 1;
@@ -198,25 +180,11 @@ img {
   object-fit: contain;
   object-position: center top;
   opacity: 1;
-  cursor: pointer;
-  transition: opacity 260ms ease;
+  cursor: ew-resize;
 }
 
 .photo-frame img:not([src]) {
   visibility: hidden;
-}
-
-.photo-frame img.is-changing {
-  opacity: 0;
-}
-
-@keyframes photo-placeholder {
-  from {
-    background-position: 180% 0, 0 0;
-  }
-  to {
-    background-position: -80% 0, 0 0;
-  }
 }
 
 .slide-controls {

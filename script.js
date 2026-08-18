@@ -3,8 +3,6 @@ let publicCollections = [];
 let activeCollectionIndex = 0;
 let photos = [];
 let activeIndex = 0;
-let isSwitching = false;
-let loadedPhotoSrc = "";
 const THEME_STORAGE_KEY = "echo37-theme";
 
 const activePhoto = document.querySelector("#activePhoto");
@@ -52,23 +50,15 @@ function loadActivePhoto() {
   if (photos.length === 0) {
     activePhoto.removeAttribute("src");
     activePhoto.alt = "当前作品集暂无作品";
-    activePhoto.closest(".photo-frame").classList.remove("is-photo-loading");
     current.textContent = 0;
     total.textContent = 0;
     return;
   }
 
   const photo = photos[activeIndex];
-  const frame = activePhoto.closest(".photo-frame");
   current.textContent = activeIndex + 1;
   total.textContent = photos.length;
   activePhoto.alt = photo.alt;
-
-  if (loadedPhotoSrc !== photo.src) {
-    frame.classList.add("is-photo-loading");
-    activePhoto.classList.add("is-changing");
-  }
-
   activePhoto.src = photo.src;
 }
 
@@ -122,15 +112,12 @@ function showRandomPhoto() {
   activeCollectionIndex = target.collectionIndex;
   photos = publicCollections[activeCollectionIndex].photos;
   activeIndex = target.photoIndex;
-  isSwitching = true;
   syncActivePhoto();
   renderCollectionNav();
 }
 
 function showPhoto(nextIndex) {
   if (photos.length === 0) return;
-  if (isSwitching) return;
-  isSwitching = true;
   activeIndex = (nextIndex + photos.length) % photos.length;
 
   loadActivePhoto();
@@ -162,17 +149,10 @@ document.querySelector("[data-prev]").addEventListener("click", () => showPhoto(
 document.querySelector("[data-next]").addEventListener("click", () => showPhoto(activeIndex + 1));
 randomPhotoButton.addEventListener("click", showRandomPhoto);
 themeToggleButton.addEventListener("click", toggleTheme);
-activePhoto.addEventListener("click", () => showPhoto(activeIndex + 1));
-activePhoto.addEventListener("load", () => {
-  loadedPhotoSrc = activePhoto.currentSrc || activePhoto.src;
-  activePhoto.closest(".photo-frame").classList.remove("is-photo-loading");
-  activePhoto.classList.remove("is-changing");
-  isSwitching = false;
-});
-activePhoto.addEventListener("error", () => {
-  activePhoto.closest(".photo-frame").classList.remove("is-photo-loading");
-  activePhoto.classList.remove("is-changing");
-  isSwitching = false;
+activePhoto.addEventListener("click", (event) => {
+  const bounds = activePhoto.getBoundingClientRect();
+  const clickedLeftSide = event.clientX < bounds.left + bounds.width / 2;
+  showPhoto(clickedLeftSide ? activeIndex - 1 : activeIndex + 1);
 });
 
 document.addEventListener("keydown", (event) => {
