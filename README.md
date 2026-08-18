@@ -25,6 +25,16 @@
 
 后台支持一次选择多张照片，并会自动按每批不超过 4 MB 的总大小串行上传；单张照片也需要控制在 4 MB 以内。
 
+### 当前功能
+
+- 后台可编辑网站名称、作品集名称和作品集简介。
+- 后台照片列表支持拖拽排序，也可以使用“上移 / 下移”。
+- 移动端作品集名称在图片上方纵向排列。
+- 移动端图片下方左侧显示 `Random / Darkroom`，右侧显示 `Previous / Next`。
+- 图片使用响应式尺寸和 Netlify Image CDN，移动端优先加载较小图片。
+- 点击图片左半区切换上一张，点击右半区切换下一张。
+- 前台会阻止图片右键菜单和原生拖拽保存；这不能阻止截图或开发者工具保存。
+
 ### 每个部署者的数据是独立的
 
 Netlify Functions 使用 Netlify Blobs 保存数据：
@@ -44,13 +54,19 @@ Netlify Functions 使用 Netlify Blobs 保存数据：
 4. 选择仓库 `xiaonaneo/Personal-Photography-Site`，生产分支选择 `main`。
 5. 保存并完成一次部署。
 
-连接成功后，每次仓库 `main` 分支有新提交，Netlify 会自动执行 `npm run build`，发布 `public/` 并重新部署 Functions。之后只需要执行：
+连接成功后，每次仓库 `main` 分支有新提交，Netlify 会自动执行 `npm run build`，发布 `public/` 并重新部署 Functions。直接连接主仓库的项目不需要手动同步，主仓库更新后会自动更新。
+
+如果你使用的是自己的 Fork，需要先添加主仓库为 `upstream`，再同步更新：
 
 ```bash
-git pull origin main
+git remote add upstream https://github.com/xiaonaneo/Personal-Photography-Site.git
+git fetch upstream
+git switch main
+git merge upstream/main
+git push origin main
 ```
 
-或者在自己的 GitHub 仓库中同步上游更新即可。也可以在 Netlify 的 `Deploys` 页面查看每次自动部署的提交记录。
+如果 GitHub 提示存在冲突，需要先解决冲突，再执行 `git add`、`git commit` 和 `git push`。也可以在自己的 GitHub Fork 页面点击 `Sync fork` 同步上游。同步完成后，连接该 Fork 的 Netlify 项目会自动重新部署。也可以在 Netlify 的 `Deploys` 页面查看每次自动部署的提交记录。
 
 自动同步的是代码、样式、前台功能和 Functions，不会覆盖自己后台已经保存的作品、简介、图片或管理员密码；这些数据保存在自己 Netlify 项目的 Blob store 中。
 
