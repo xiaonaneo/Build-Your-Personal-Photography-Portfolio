@@ -1,6 +1,7 @@
 let draft;
 const ALLOWED_UPLOAD_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 const MAX_UPLOAD_SIZE = MAX_UPLOAD_BATCH_BYTES;
+const MAX_COLLECTION_DESCRIPTION_LENGTH = 500;
 let draggedCollectionIndex = null;
 let draggedPhotoIndex = null;
 let isDirty = false;
@@ -18,6 +19,7 @@ const currentCollectionName = document.querySelector("[data-current-collection]"
 const statusText = document.querySelector("[data-status]");
 const saveButton = document.querySelector("[data-save-button]");
 const previewName = document.querySelector("[data-preview-name]");
+const previewDescription = document.querySelector("[data-preview-description]");
 const previewCollections = document.querySelector("[data-preview-collections]");
 const previewImage = document.querySelector("[data-preview-image]");
 
@@ -91,6 +93,8 @@ function updatePreview() {
     previewCollections.append(name);
   });
   currentCollectionName.textContent = collection.name;
+  previewDescription.textContent = collection.description || "";
+  previewDescription.hidden = !(collection.description || "").trim();
   previewImage.src = firstPhoto?.src || "";
   previewImage.alt = firstPhoto?.alt || "后台预览图";
 }
@@ -101,6 +105,8 @@ function renderCollections() {
   draft.collections.forEach((collection, index) => {
     const item = document.createElement("article");
     const nameInput = document.createElement("input");
+    const descriptionInput = document.createElement("textarea");
+    const details = document.createElement("div");
     const actions = document.createElement("div");
     const selectButton = document.createElement("button");
     const upButton = document.createElement("button");
@@ -115,6 +121,14 @@ function renderCollections() {
     nameInput.value = collection.name;
     nameInput.dataset.collectionName = index;
     nameInput.setAttribute("aria-label", "作品集名称");
+    descriptionInput.value = collection.description || "";
+    descriptionInput.dataset.collectionDescription = index;
+    descriptionInput.setAttribute("aria-label", "作品集简介");
+    descriptionInput.placeholder = "作品集简介（可选）";
+    descriptionInput.rows = 2;
+    descriptionInput.maxLength = MAX_COLLECTION_DESCRIPTION_LENGTH;
+    details.className = "collection-details";
+    details.append(nameInput, descriptionInput);
     actions.className = "collection-actions";
     selectButton.type = "button";
     selectButton.textContent = index === draft.activeCollectionIndex ? "当前" : "编辑";
@@ -130,7 +144,7 @@ function renderCollections() {
     removeButton.dataset.removeCollection = index;
 
     actions.append(selectButton, upButton, downButton, removeButton);
-    item.append(nameInput, actions);
+    item.append(details, actions);
     collectionList.append(item);
   });
 }
@@ -197,6 +211,11 @@ editor.addEventListener("input", (event) => {
     const index = Number(event.target.dataset.collectionName);
     draft.collections[index].name = event.target.value.trim() || `Portfolio ${index + 1}`;
     renderPhotos();
+  }
+
+  if (event.target.matches("[data-collection-description]")) {
+    const index = Number(event.target.dataset.collectionDescription);
+    draft.collections[index].description = event.target.value.slice(0, MAX_COLLECTION_DESCRIPTION_LENGTH);
   }
 
   updatePreview();
@@ -394,6 +413,7 @@ photoList.addEventListener("dragend", () => {
 document.querySelector("[data-add-collection]").addEventListener("click", () => {
   draft.collections.push({
     name: `Portfolio ${draft.collections.length + 1}`,
+    description: "",
     photos: [],
   });
   draft.activeCollectionIndex = draft.collections.length - 1;

@@ -31,6 +31,7 @@ MAX_COLLECTIONS = 50
 MAX_PHOTOS_PER_COLLECTION = 200
 MAX_TOTAL_PHOTOS = 500
 MAX_NAME_LENGTH = 200
+MAX_DESCRIPTION_LENGTH = 500
 MAX_ALT_LENGTH = 300
 MAX_SOURCE_LENGTH = 2048
 MAX_FILES_PER_REQUEST = 20
@@ -126,6 +127,9 @@ def validate_config(config):
     collection_name = collection.get("name", "")
     if not isinstance(collection_name, str) or len(collection_name) > MAX_NAME_LENGTH:
       return "作品集名称过长或格式无效。"
+    collection_description = collection.get("description", "")
+    if not isinstance(collection_description, str) or len(collection_description) > MAX_DESCRIPTION_LENGTH:
+      return "作品集简介过长或格式无效。"
     photos = collection.get("photos")
     if not isinstance(photos, list):
       return "作品集图片格式无效。"

@@ -130,6 +130,13 @@ img {
   justify-items: start;
 }
 
+.collection-description {
+  max-width: var(--sidebar-width);
+  margin: -2px 0 2px;
+  color: var(--muted);
+  white-space: pre-line;
+}
+
 .random-photo {
   margin-top: 18px;
   color: var(--muted);

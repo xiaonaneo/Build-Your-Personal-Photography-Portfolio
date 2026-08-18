@@ -10,3 +10,4 @@ assert.match(script, /function showRandomPhoto/, "需要独立的随机跳转逻
 assert.match(script, /Math\.random/, "随机跳转应使用随机索引");
 assert.match(script, /data-random-photo/, "Random 按钮需要绑定点击事件");
 assert.match(script, /renderCollectionNav\(\);/, "随机跨作品集后需要刷新导航高亮");
+assert.match(script, /data-collection-description/, "前台需要展示当前作品集简介");

@@ -18,5 +18,6 @@ assert.match(pythonApp, /MAX_FILES_PER_REQUEST/);
 assert.doesNotMatch(pythonApp, /str\(exc\)/, "配置错误响应不能泄露异常文本");
 assert.match(pythonApp, /target\.is_relative_to\(UPLOAD_DIR\)/, "上传路径必须使用目录边界校验");
 assert.match(configFunction, /validateConfig/);
+assert.match(configFunction, /MAX_DESCRIPTION_LENGTH/);
 assert.match(uploadFunction, /detectImageType/);
 assert.match(uploadFunction, /maxFilesPerRequest/);

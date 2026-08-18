@@ -24,3 +24,5 @@ assert.match(script, /SINGLE_FILE_TOO_LARGE/, "单张超过批次上限时需要
 assert.match(script, /photo-drag-handle/, "照片列表需要显示拖拽把手");
 assert.match(script, /dataTransfer\.setData\("text\/plain"/, "原生拖拽需要写入拖拽数据以兼容浏览器");
 assert.match(script, /is-drop-before|is-drop-after/, "拖拽时需要显示上下插入位置");
+assert.match(script, /data-collection-description/, "后台需要编辑作品集简介字段");
+assert.match(html, /data-preview-description/, "后台预览需要包含作品集简介区域");

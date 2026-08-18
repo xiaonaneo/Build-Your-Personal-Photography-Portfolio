@@ -9,6 +9,7 @@ const MAX_COLLECTIONS = 50;
 const MAX_PHOTOS_PER_COLLECTION = 200;
 const MAX_TOTAL_PHOTOS = 500;
 const MAX_NAME_LENGTH = 200;
+const MAX_DESCRIPTION_LENGTH = 500;
 const MAX_ALT_LENGTH = 300;
 const MAX_SOURCE_LENGTH = 2048;
 
@@ -33,6 +34,7 @@ function validateConfig(config: unknown) {
   for (const collection of value.collections) {
     if (typeof collection !== "object" || collection === null) return "作品集格式无效。";
     if (String(collection.name || "").length > MAX_NAME_LENGTH) return "作品集名称过长。";
+    if (String(collection.description || "").length > MAX_DESCRIPTION_LENGTH) return "作品集简介过长。";
     if (!Array.isArray(collection.photos)) return "作品集图片格式无效。";
     if (collection.photos.length > MAX_PHOTOS_PER_COLLECTION) return "单个作品集图片数量超过上限。";
     totalPhotos += collection.photos.length;
@@ -57,6 +59,7 @@ function normalizeConfig(config: unknown) {
       : 0,
     collections: collections.map((collection: any, index: number) => ({
       name: String(collection?.name || `Portfolio ${index + 1}`),
+      description: String(collection?.description || ""),
       photos: Array.isArray(collection?.photos)
         ? collection.photos
             .map((photo: any) => ({

@@ -4,6 +4,7 @@ const DEFAULT_SITE_CONFIG = {
   collections: [
     {
       name: "Portfolio",
+      description: "",
       photos: [
         {
           src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1400&q=90",
@@ -16,6 +17,7 @@ const DEFAULT_SITE_CONFIG = {
 
 // Keep multipart batches below Netlify's effective binary request limit.
 const MAX_UPLOAD_BATCH_BYTES = 4 * 1024 * 1024;
+const MAX_DESCRIPTION_LENGTH = 500;
 
 function normalizePhotos(photos) {
   return photos
@@ -36,6 +38,7 @@ function normalizeSiteConfig(config) {
   const normalizedCollections = collections
     .map((collection, index) => ({
       name: String(collection.name || `Portfolio ${index + 1}`).trim(),
+      description: String(collection.description || "").trim().slice(0, MAX_DESCRIPTION_LENGTH),
       photos: normalizePhotos(Array.isArray(collection.photos) ? collection.photos : []),
     }))
     .filter((collection) => collection.name);

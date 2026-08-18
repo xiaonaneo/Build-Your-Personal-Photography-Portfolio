@@ -15,6 +15,7 @@ const randomPhotoButton = document.querySelector("[data-random-photo]");
 const themeToggleButton = document.querySelector("[data-theme-toggle]");
 const siteName = document.querySelector("[data-site-name]");
 const siteTitle = document.querySelector("[data-site-title]");
+const collectionDescription = document.querySelector("[data-collection-description]");
 
 function applyTheme(theme) {
   const isDarkroom = theme === "darkroom";
@@ -78,6 +79,9 @@ function syncActivePhoto() {
 
 function renderCollectionNav() {
   collectionNav.innerHTML = "";
+  const description = publicCollections[activeCollectionIndex]?.description?.trim() || "";
+  collectionDescription.textContent = description;
+  collectionDescription.hidden = !description;
 
   publicCollections.forEach((collection, index) => {
     const button = document.createElement("button");

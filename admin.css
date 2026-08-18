@@ -212,6 +212,17 @@ textarea:focus {
   cursor: grab;
 }
 
+.collection-details {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+}
+
+.collection-details textarea {
+  min-height: 52px;
+  resize: vertical;
+}
+
 .collection-item.is-active {
   border-color: var(--active);
 }
@@ -387,6 +398,13 @@ textarea:focus {
 .preview-collections {
   display: grid;
   gap: 12px;
+}
+
+.preview-description {
+  max-width: 360px;
+  margin: -14px 0 0;
+  color: var(--muted);
+  white-space: pre-line;
 }
 
 .preview-collections span.is-active {
