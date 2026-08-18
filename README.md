@@ -4,7 +4,7 @@
 
 ## 一键部署到 Netlify
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/xiaonaneo/photography-webside)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/xiaonaneo/Personal-Photography-Site)
 
 点击按钮后：
 
