@@ -14,8 +14,6 @@ const themeToggleButton = document.querySelector("[data-theme-toggle]");
 const siteName = document.querySelector("[data-site-name]");
 const siteTitle = document.querySelector("[data-site-title]");
 const collectionDescription = document.querySelector("[data-collection-description]");
-const photoFrame = activePhoto.closest(".photo-frame");
-const photoNavHint = document.querySelector("[data-photo-nav-hint]");
 
 function applyTheme(theme) {
   const isDarkroom = theme === "darkroom";
@@ -155,17 +153,6 @@ activePhoto.addEventListener("click", (event) => {
   const bounds = activePhoto.getBoundingClientRect();
   const direction = event.clientX < bounds.left + bounds.width / 2 ? "left" : "right";
   showPhoto(direction === "left" ? activeIndex - 1 : activeIndex + 1);
-});
-activePhoto.addEventListener("pointermove", (event) => {
-  const bounds = activePhoto.getBoundingClientRect();
-  const direction = event.clientX < bounds.left + bounds.width / 2 ? "left" : "right";
-  photoFrame.dataset.direction = direction;
-  photoNavHint.textContent = direction === "left" ? "←" : "→";
-  photoNavHint.hidden = false;
-});
-activePhoto.addEventListener("pointerleave", () => {
-  delete photoFrame.dataset.direction;
-  photoNavHint.hidden = true;
 });
 activePhoto.addEventListener("contextmenu", (event) => event.preventDefault());
 activePhoto.addEventListener("dragstart", (event) => event.preventDefault());

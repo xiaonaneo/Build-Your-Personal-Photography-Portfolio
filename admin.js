@@ -22,6 +22,11 @@ const previewName = document.querySelector("[data-preview-name]");
 const previewDescription = document.querySelector("[data-preview-description]");
 const previewCollections = document.querySelector("[data-preview-collections]");
 const previewImage = document.querySelector("[data-preview-image]");
+const previewCurrent = document.querySelector("[data-preview-current]");
+const previewTotal = document.querySelector("[data-preview-total]");
+const previewPrevious = document.querySelector("[data-preview-prev]");
+const previewNext = document.querySelector("[data-preview-next]");
+let previewPhotoIndex = 0;
 
 function setStatus(message) {
   statusText.textContent = message;
@@ -83,20 +88,27 @@ function collectBaseFields() {
 
 function updatePreview() {
   const collection = activeCollection();
-  const firstPhoto = collection.photos[0];
+  previewPhotoIndex = Math.min(previewPhotoIndex, Math.max(collection.photos.length - 1, 0));
+  const previewPhoto = collection.photos[previewPhotoIndex];
   previewName.textContent = draft.name;
   previewCollections.innerHTML = "";
   draft.collections.forEach((item, index) => {
-    const name = document.createElement("span");
+    const name = document.createElement("button");
+    name.type = "button";
     name.textContent = item.name;
     name.classList.toggle("is-active", index === draft.activeCollectionIndex);
+    name.dataset.previewCollection = index;
     previewCollections.append(name);
   });
   currentCollectionName.textContent = collection.name;
   previewDescription.textContent = collection.description || "";
   previewDescription.hidden = !(collection.description || "").trim();
-  previewImage.src = firstPhoto?.src || "";
-  previewImage.alt = firstPhoto?.alt || "后台预览图";
+  previewImage.src = previewPhoto?.src || "";
+  previewImage.alt = previewPhoto?.alt || "后台预览图";
+  previewCurrent.textContent = collection.photos.length > 0 ? previewPhotoIndex + 1 : 0;
+  previewTotal.textContent = collection.photos.length;
+  previewPrevious.disabled = collection.photos.length < 2;
+  previewNext.disabled = collection.photos.length < 2;
 }
 
 function renderCollections() {
@@ -409,6 +421,24 @@ photoList.addEventListener("dragend", () => {
     item.classList.remove("is-dragging", "is-drop-target", "is-drop-before", "is-drop-after");
   });
 });
+
+previewCollections.addEventListener("click", (event) => {
+  const collectionButton = event.target.closest("[data-preview-collection]");
+  if (!collectionButton) return;
+  draft.activeCollectionIndex = Number(collectionButton.dataset.previewCollection);
+  previewPhotoIndex = 0;
+  renderAll();
+});
+
+function movePreviewPhoto(offset) {
+  const photos = activeCollection().photos;
+  if (photos.length < 2) return;
+  previewPhotoIndex = (previewPhotoIndex + offset + photos.length) % photos.length;
+  updatePreview();
+}
+
+previewPrevious.addEventListener("click", () => movePreviewPhoto(-1));
+previewNext.addEventListener("click", () => movePreviewPhoto(1));
 
 document.querySelector("[data-add-collection]").addEventListener("click", () => {
   draft.collections.push({

@@ -180,37 +180,10 @@ img {
   object-fit: contain;
   object-position: center top;
   opacity: 1;
+  cursor: pointer;
   -webkit-user-drag: none;
   user-select: none;
   -webkit-touch-callout: none;
-}
-
-.photo-frame[data-direction="left"] img {
-  cursor: w-resize;
-}
-
-.photo-frame[data-direction="right"] img {
-  cursor: e-resize;
-}
-
-.photo-nav-hint {
-  position: absolute;
-  top: 50%;
-  z-index: 2;
-  color: var(--text);
-  font-size: 26px;
-  line-height: 1;
-  opacity: 0.72;
-  pointer-events: none;
-  transform: translateY(-50%);
-}
-
-.photo-frame[data-direction="left"] .photo-nav-hint {
-  left: 18px;
-}
-
-.photo-frame[data-direction="right"] .photo-nav-hint {
-  right: 18px;
 }
 
 .photo-frame img:not([src]) {

@@ -82,14 +82,28 @@
       </form>
 
       <aside class="preview" aria-label="当前预览">
-        <div class="preview-sidebar">
-          <strong data-preview-name></strong>
-          <p class="preview-description" data-preview-description hidden></p>
-          <div class="preview-collections" data-preview-collections></div>
+        <div class="preview-site">
+          <header class="preview-site-sidebar">
+            <strong class="preview-site-name" data-preview-name></strong>
+            <nav class="preview-main-nav" data-preview-collections aria-label="预览作品集导航"></nav>
+            <span class="preview-action">Random</span>
+            <span class="preview-action">Darkroom</span>
+          </header>
+          <main class="preview-portfolio">
+            <div class="preview-showcase">
+              <figure class="preview-photo-frame">
+                <img data-preview-image alt="后台预览图" draggable="false" />
+              </figure>
+              <p class="preview-description" data-preview-description hidden></p>
+            </div>
+            <div class="preview-slide-controls" aria-label="预览作品切换">
+              <button type="button" data-preview-prev>Previous</button>
+              <span>/</span>
+              <button type="button" data-preview-next>Next</button>
+              <span>(<span data-preview-current>0</span> of <span data-preview-total>0</span>)</span>
+            </div>
+          </main>
         </div>
-        <figure>
-          <img data-preview-image alt="后台预览图" />
-        </figure>
       </aside>
     </main>
 
