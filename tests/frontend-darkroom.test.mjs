@@ -26,6 +26,10 @@ assert.match(script, /dragstart.*preventDefault/, "图片需要禁止原生拖�
 assert.match(styles, /\.slide-controls\s*\{[^}]*opacity: 1/s, "移动端需要始终显示照片切换控件");
 assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.sidebar\s*\{[\s\S]*position: static/, "移动端导航不能继续固定在图片左侧");
 assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.photo-frame\s*\{[\s\S]*width: 100%/, "移动端图片需要使用完整可用宽度");
+assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.collection-nav\s*\{[\s\S]*flex-wrap: nowrap[\s\S]*overflow-x: auto/s, "移动端作品集导航需要横向滚动排列");
+assert.match(styles, /overflow-x: hidden/, "移动端不应出现横向页面溢出");
+assert.match(styles, /safe-area-inset-top/, "移动端需要适配刘海屏安全区域");
+assert.match(styles, /safe-area-inset-bottom/, "移动端底部操作区需要适配安全区域");
 assert.match(styles, /\.name\s*\{[^}]*font-size: 14px/s, "网站标题字号需要放大一号");
 assert.match(styles, /\.collection-description\s*\{[\s\S]*position: absolute[\s\S]*top: 100%[\s\S]*right: 0/s, "PC 端作品集简介需要位于图片下方右侧");
 assert.match(styles, /\.slide-controls\s*\{[\s\S]*width: 100%[\s\S]*justify-content: flex-start/s, "PC 端切换控件需要与图片左边缘对齐");
