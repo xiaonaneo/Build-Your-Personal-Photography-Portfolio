@@ -26,7 +26,7 @@ assert.match(script, /dragstart.*preventDefault/, "图片需要禁止原生拖�
 assert.match(styles, /\.slide-controls\s*\{[^}]*opacity: 1/s, "移动端需要始终显示照片切换控件");
 assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.sidebar\s*\{[\s\S]*position: static/, "移动端导航不能继续固定在图片左侧");
 assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.photo-frame\s*\{[\s\S]*width: 100%/, "移动端图片需要使用完整可用宽度");
-assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.collection-nav\s*\{[\s\S]*flex-wrap: nowrap[\s\S]*overflow-x: auto/s, "移动端作品集导航需要横向滚动排列");
+assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.collection-nav\s*\{[\s\S]*flex-wrap: wrap[\s\S]*overflow: visible/s, "移动端作品集导航需要全部横向陈列并自动换行");
 assert.match(styles, /overflow-x: hidden/, "移动端不应出现横向页面溢出");
 assert.match(styles, /safe-area-inset-top/, "移动端需要适配刘海屏安全区域");
 assert.match(styles, /safe-area-inset-bottom/, "移动端底部操作区需要适配安全区域");
@@ -39,6 +39,10 @@ assert.match(styles, /\.photo-stack\s*\{[\s\S]*display: inline-block/s, "PC 端�
 assert.match(script, /responsiveImageSrcSet/, "照片需要使用响应式图片源");
 assert.match(script, /\.netlify\/images/, "上传图片需要经过 Netlify Image CDN 优化");
 assert.match(script, /activePhoto\.srcset/, "主图需要设置 srcset 让浏览器选择合适尺寸");
+assert.match(script, /const preloadedPhotos = new Map\(\)/, "相邻照片预加载需要保留在缓存中");
+assert.match(script, /preloadPhoto\(activeIndex \+ 1, "high"\)/, "下一张照片需要高优先级预加载");
+assert.match(script, /preloadPhoto\(activeIndex - 1\)/, "上一张照片也需要预加载以支持反向切换");
+assert.match(script, /preloadedPhotos\.size > 4/, "预加载缓存需要限制大小避免占用过多内存");
 assert.match(html, /class="collection-nav-group"/, "移动导航需要明确作品集分组");
 assert.match(html, /class="mobile-nav-actions"/, "移动端功能操作需要放在图片和切换控件之后");
 assert.match(html, /class="mobile-bottom-row"/, "移动端图片下方需要使用左右分区容器");

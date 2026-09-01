@@ -14,6 +14,7 @@ const themeToggleButtons = document.querySelectorAll("[data-theme-toggle]");
 const siteName = document.querySelector("[data-site-name]");
 const siteTitle = document.querySelector("[data-site-title]");
 const collectionDescription = document.querySelector("[data-collection-description]");
+const preloadedPhotos = new Map();
 
 const RESPONSIVE_IMAGE_WIDTHS = [480, 768, 1200];
 const RESPONSIVE_IMAGE_SIZES = "(max-width: 760px) calc(100vw - 36px), 575px";
@@ -74,15 +75,23 @@ function toggleTheme() {
   } catch {}
 }
 
-function preloadPhoto(index) {
+function preloadPhoto(index, priority = "low") {
   if (photos.length === 0) return;
   const photo = photos[(index + photos.length) % photos.length];
+  if (preloadedPhotos.has(photo.src)) return;
+
   const image = new Image();
   image.decoding = "async";
-  image.fetchPriority = "low";
+  image.fetchPriority = priority;
   image.sizes = RESPONSIVE_IMAGE_SIZES;
   image.srcset = responsiveImageSrcSet(photo.src);
-  image.src = optimizedImageSource(photo.src, 768);
+  image.src = optimizedImageSource(photo.src, 480);
+  preloadedPhotos.set(photo.src, image);
+
+  while (preloadedPhotos.size > 4) {
+    const oldestSource = preloadedPhotos.keys().next().value;
+    preloadedPhotos.delete(oldestSource);
+  }
 }
 
 function loadActivePhoto() {
@@ -105,7 +114,8 @@ function loadActivePhoto() {
 
 function syncActivePhoto() {
   loadActivePhoto();
-  preloadPhoto(activeIndex + 1);
+  preloadPhoto(activeIndex + 1, "high");
+  preloadPhoto(activeIndex - 1);
 }
 
 function renderCollectionNav() {
@@ -161,8 +171,7 @@ function showPhoto(nextIndex) {
   if (photos.length === 0) return;
   activeIndex = (nextIndex + photos.length) % photos.length;
 
-  loadActivePhoto();
-  preloadPhoto(activeIndex + 1);
+  syncActivePhoto();
 }
 
 async function initSite() {

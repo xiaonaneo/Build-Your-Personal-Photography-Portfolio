@@ -271,23 +271,18 @@ img {
 
   .collection-nav {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 18px;
+    flex-wrap: wrap;
+    gap: 8px 18px;
     max-width: 100%;
-    overflow-x: auto;
+    overflow: visible;
     padding-bottom: 4px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .collection-nav::-webkit-scrollbar {
-    display: none;
   }
 
   .collection-nav button {
     flex: 0 0 auto;
     min-height: 28px;
-    white-space: nowrap;
+    max-width: 100%;
+    white-space: normal;
     text-align: left;
   }
 
