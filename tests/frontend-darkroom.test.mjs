@@ -7,6 +7,7 @@ const themeInit = readFileSync(new URL("../theme-init.js", import.meta.url), "ut
 const styles = readFileSync(new URL("../styles.css", import.meta.url), "utf8");
 
 assert.match(html, /data-theme-toggle/, "前台需要 Darkroom 模式按钮入口");
+assert.match(html, /rel="icon"[^>]+xiaonaneo\.jpg/, "前台需要使用用户提供的头像作为 favicon");
 assert.match(html, /theme-init\.js/, "首屏需要加载主题初始化脚本避免闪白");
 assert.match(themeInit, /localStorage\.getItem\("echo37-theme"\)/, "首屏需要提前读取主题避免闪白");
 assert.match(script, /const THEME_STORAGE_KEY = "echo37-theme"/, "主题选择需要使用稳定的本地存储 key");

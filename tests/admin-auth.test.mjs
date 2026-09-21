@@ -7,6 +7,8 @@ const configFunction = readFileSync(new URL("../netlify/functions/config.ts", im
 const uploadFunction = readFileSync(new URL("../netlify/functions/upload.ts", import.meta.url), "utf8");
 
 assert.match(html, /data-login-form/, "后台需要登录表单");
+assert.match(html, /rel="icon"[^>]+xiaonaneo\.jpg/, "后台需要使用同一张头像作为 favicon");
+assert.match(html, /href="https:\/\/xiaonaneo\.com\//, "后台打开网站链接需要使用最新正式域名");
 assert.match(html, /type="password"/, "后台密码必须使用 password 输入框");
 assert.match(html, /data-editor-shell hidden/, "编辑器在认证前必须隐藏");
 assert.match(authScript, /fetch\("\/api\/auth"/, "后台需要调用认证接口");

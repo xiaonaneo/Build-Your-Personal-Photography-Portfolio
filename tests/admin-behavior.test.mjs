@@ -32,3 +32,6 @@ assert.match(html, /class="preview-showcase"/, "后台预览需要显示图片�
 assert.match(html, /data-preview-prev|data-preview-next/, "后台预览需要显示正式站点的切换控制");
 assert.match(script, /movePreviewPhoto/, "后台预览需要支持切换当前预览照片");
 assert.match(adminStyles, /\[hidden\]\s*\{[^}]*display: none !important/s, "后台隐藏编辑器不能被布局 display 覆盖");
+assert.match(adminStyles, /\.admin-header nav\s*\{[\s\S]*align-items: center/s, "后台头部导航需要垂直居中");
+assert.match(adminStyles, /\.admin-header nav > a,[\s\S]*display: inline-flex/s, "后台头部两个操作需要使用统一行内布局");
+assert.match(adminStyles, /\.admin-header nav > a,[\s\S]*height: 32px[\s\S]*align-self: flex-end/s, "后台头部两个操作需要统一底部对齐");

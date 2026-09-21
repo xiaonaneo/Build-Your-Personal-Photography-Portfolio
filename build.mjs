@@ -12,6 +12,7 @@ const runtimeFiles = [
   "admin-auth.js",
   "site-config.js",
   "theme-init.js",
+  "xiaonaneo.jpg",
 ];
 
 rmSync(publishDirectory, { recursive: true, force: true });

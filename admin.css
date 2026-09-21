@@ -78,9 +78,23 @@ button {
 
 .admin-header nav {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 14px;
   color: var(--muted);
+}
+
+.admin-header nav > a,
+.admin-header nav > button {
+  display: inline-flex;
+  height: 32px;
+  min-height: 32px;
+  align-self: flex-end;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .admin-header a:hover,
